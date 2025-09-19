@@ -47,14 +47,12 @@ body {
 
 .karla {
   font-family: "Karla", sans-serif;
-  font-optical-sizing: auto;
   font-weight: 650;
   font-style: normal;
 }
 
 .kantumruy-pro {
   font-family: "Kantumruy Pro", sans-serif;
-  font-optical-sizing: auto;
   font-weight: 300;
   font-size: 25px;
   font-style: normal;
@@ -160,7 +158,7 @@ body {
 
 .motto {
   all: unset;
-  margin: none;
+  margin: 0;
   position: relative;
   float: right;
   height: 80%;
@@ -171,7 +169,8 @@ body {
 .bg {
   float: left;
   position: fixed;
-  background-color: 0B3D91;
+  background-color: #0b3d91;
+  background-color: #0b3d91;
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
@@ -182,7 +181,6 @@ body {
 
 .team-section {
   padding-left: 30px;
-  padding-top: 30px;
 }
 
 .member {
@@ -204,12 +202,12 @@ body {
 }
 
 h1 {
-  font-family: "Karla", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 650;
-  font-style: normal;
-  font-size: 50px;
-  margin: 0;
+  font-size: 60px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: "Kantumruy Pro", sans-serif;
+  font-weight: 500;
 }
 
 .page {
@@ -219,9 +217,9 @@ h1 {
 }
 
 .headshot {
-  width: 250;
-  height: 250;
-  padding-left: 30;
+  width: 250px;
+  height: 250px;
+  padding-left: 30px;
   margin: 20px;
 }
 
@@ -236,6 +234,7 @@ html {
 }
 
 .container {
+  padding-top: 30px;
   flex-direction: column;
   color: white;
 }
