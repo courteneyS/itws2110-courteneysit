@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: #222222;
+  color: white;
+}
+
+.title {
+  font-size: 40px;
+  text-align: center;
+}
+
+.current-weather-card {
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+  height: fit-content;
+}
+
+.current-temp {
+  font-size: 30px;
+}
+
+.weather-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.weather-icon {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.weather-headline h3 {
+  margin: 0;
+}
+
+.right {
+  width: 50%;
+}
+
+.left {
+  width: 50%;
+}
+
+.weekly-forecast-container {
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+}
+
+.air-quality-info {
+  margin-top: 16px;
+  color: #111;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.air-quality-info details {
+  margin: 6px 0;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.air-quality-info summary {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.air-quality-info p {
+  margin: 6px 0 0 0;
+  line-height: 1.3;
+}
+
+.air-quality-container {
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+  height: fit-content;
+}
+
+.container {
+  display: flex;
+  margin: auto;
+  width: 90%;
+}
+
+.day-tile {
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  margin: 0px;
+  padding: 0;
+  font-size: 25px;
+}
+
+.center-header {
+  margin: 0px;
+  padding: 0;
+  font-size: 25px;
+  text-align: center;
+}
+
+.day {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.forecast-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 5px;
+  justify-items: center;
+  align-items: center;
+}
