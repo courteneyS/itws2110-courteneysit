@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Troy Weather & Air Quality</title>
+    <style>
+      /* CSS Styling */
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap");
+
+      :root {
+        --bg-color: #222222;
+        /* --card-color is no longer the primary source for card backgrounds */
+        --text-color: #f0f0f0;
+        --subtle-text-color: #aaaaaa;
+        --dark-text-color: #222222; /* New variable for dark text */
+        --subtle-dark-text: #555555; /* New variable for subtle dark text */
+        --light-border-color: #e0e0e0; /* New variable for light borders */
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      #app-container {
+        width: 100%;
+        max-width: 1100px;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-template-areas:
+          "title title"
+          "weather air";
+        gap: 25px;
+      }
+
+      #main-title {
+        grid-area: title;
+      }
+
+      #weather-column {
+        grid-area: weather;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+      }
+
+      #air-quality-column {
+        grid-area: air;
+      }
+
+      /* UPDATED CARD STYLES */
+      .card {
+        background-color: #ffffff; /* White background for cards */
+        color: var(--dark-text-color); /* Dark text for cards */
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        border: 1px solid var(--light-border-color);
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0 0 10px 0;
+        font-weight: 600;
+      }
+
+      h1 {
+        font-size: 2.2em;
+        text-align: center;
+        margin-bottom: 10px;
+        color: var(--text-color); /* H1 is outside card, so it stays light */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        border-bottom: 1px solid var(--light-border-color); /* Light border for contrast */
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
+
+      /* Current Weather Styles */
+      #current-weather {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+
+      #current-temp {
+        font-size: 4em;
+        font-weight: 600;
+      }
+
+      #current-details {
+        text-align: right;
+      }
+
+      #weather-description {
+        font-size: 1.2em;
+        font-weight: 400;
+        text-transform: capitalize;
+      }
+
+      #weather-icon {
+        width: 80px;
+        height: 80px;
+      }
+
+      /* 5-Day Forecast Styles */
+      #forecast-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 20px;
+        text-align: center;
+      }
+
+      .forecast-day {
+        /* No more boxes */
+      }
+
+      .forecast-day img {
+        width: 50px;
+        height: 50px;
+      }
+
+      .forecast-day h3 {
+        font-size: 1.1em;
+        margin-bottom: 5px;
+      }
+
+      /* UPDATED forecast text colors */
+      .forecast-temp {
+        font-size: 1em;
+        color: var(--subtle-dark-text);
+      }
+
+      .forecast-temp strong {
+        color: var(--dark-text-color);
+      }
+
+      /* Air Quality Styles */
+      #air-quality-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      /* UPDATED details box styling */
+      .aq-metric details {
+        border: 1px solid var(--light-border-color);
+        border-radius: 6px;
+        padding: 12px;
+        background-color: #f7f7f7; /* Slightly off-white for contrast */
+      }
+
+      .aq-metric summary {
+        cursor: pointer;
+        font-weight: 600;
+        list-style: none; /* Remove default marker */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .aq-metric summary::-webkit-details-marker {
+        display: none; /* Hide for Chrome/Safari */
+      }
+
+      .aq-metric summary::after {
+        content: "▼";
+        font-size: 0.7em;
+        transition: transform 0.2s;
+      }
+
+      .aq-metric details[open] summary::after {
+        transform: rotate(180deg);
+      }
+
+      /* UPDATED metric text colors */
+      .aq-metric-value {
+        font-weight: 400;
+        color: var(--subtle-dark-text);
+      }
+
+      .aq-metric p {
+        font-size: 0.85em;
+        color: var(--subtle-dark-text);
+        margin-top: 10px;
+        line-height: 1.5;
+        padding-top: 10px;
+        border-top: 1px solid var(--light-border-color);
+      }
+
+      /* Responsive layout for smaller screens */
+      @media (max-width: 900px) {
+        #app-container {
+          grid-template-columns: 1fr;
+          grid-template-areas:
+            "title"
+            "weather"
+            "air";
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app-container">
+      <div id="main-title">
+        <h1>Troy, NY Dashboard</h1>
+      </div>
+
+      <div id="weather-column">
+        <div class="card">
+          <h2>Current Weather</h2>
+          <div id="current-weather">
+            <div>
+              <div id="current-temp">--°F</div>
+              <div id="weather-description">Loading...</div>
+            </div>
+            <div id="current-details">
+              <img
+                id="weather-icon"
+                src="https://openweathermap.org/img/wn/01d@2x.png"
+                alt="Weather icon"
+              />
+              <div>Feels like: <span id="feels-like">--°F</span></div>
+              <div>Humidity: <span id="humidity">--%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>5-Day Forecast</h2>
+          <div id="forecast-container">
+            <p>Loading forecast...</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="air-quality-column">
+        <div class="card">
+          <h2>Air Quality</h2>
+          <div id="air-quality-grid">
+            <p>Loading air quality data...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // JavaScript Logic
+      window.addEventListener("load", () => {
+        const lat = 42.7284; // Latitude for Troy, NY
+        const lon = -73.6918; // Longitude for Troy, NY
+        const apiKey = "YOUR_API_KEY"; // <-- ⚠️ PASTE YOUR OpenWeatherMap API KEY HERE
+
+        if (apiKey === "YOUR_API_KEY" || apiKey === "") {
+          alert(
+            'Please replace "YOUR_API_KEY" with your actual OpenWeatherMap API key in the script section.'
+          );
+        }
+
+        fetchWeather(lat, lon, apiKey);
+        fetchAirQuality(lat, lon);
+      });
+
+      // 1. Fetch Weather and Forecast Data
+      function fetchWeather(lat, lon, apiKey) {
+        const units = "imperial"; // for Fahrenheit
+        const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${units}`;
+        const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${units}`;
+
+        // Fetch Current Weather
+        fetch(currentWeatherUrl)
+          .then((response) => {
+            if (!response.ok)
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            return response.json();
+          })
+          .then((data) => {
+            displayCurrentWeather(data);
+          })
+          .catch((error) =>
+            console.error("Error fetching current weather:", error)
+          );
+
+        // Fetch 5-Day Forecast
+        fetch(forecastUrl)
+          .then((response) => {
+            if (!response.ok)
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            return response.json();
+          })
+          .then((data) => {
+            displayForecast(data);
+          })
+          .catch((error) =>
+            console.error("Error fetching forecast data:", error)
+          );
+      }
+
+      // 2. Fetch Air Quality Data
+      function fetchAirQuality(lat, lon) {
+        const airQualityUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,ozone,sulphur_dioxide,us_aqi`;
+
+        fetch(airQualityUrl)
+          .then((response) => {
+            if (!response.ok)
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            return response.json();
+          })
+          .then((data) => {
+            displayAirQuality(data);
+          })
+          .catch((error) =>
+            console.error("Error fetching air quality data:", error)
+          );
+      }
+
+      // Display Functions
+      function displayCurrentWeather(data) {
+        document.getElementById("current-temp").textContent = `${Math.round(
+          data.main.temp
+        )}°F`;
+        document.getElementById("weather-description").textContent =
+          data.weather[0].description;
+        document.getElementById("feels-like").textContent = `${Math.round(
+          data.main.feels_like
+        )}°F`;
+        document.getElementById(
+          "humidity"
+        ).textContent = `${data.main.humidity}%`;
+        document.getElementById(
+          "weather-icon"
+        ).src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+        document.getElementById("weather-icon").alt =
+          data.weather[0].description;
+      }
+
+      function displayForecast(data) {
+        const forecastContainer = document.getElementById("forecast-container");
+        forecastContainer.innerHTML = ""; // Clear loading message
+
+        const dailyData = {};
+
+        data.list.forEach((item) => {
+          const date = new Date(item.dt * 1000).toLocaleDateString();
+          if (!dailyData[date]) {
+            dailyData[date] = { temps: [], icons: [], descriptions: [] };
+          }
+          dailyData[date].temps.push(item.main.temp);
+          dailyData[date].icons.push(item.weather[0].icon);
+          dailyData[date].descriptions.push(item.weather[0].description);
+        });
+
+        Object.keys(dailyData)
+          .slice(0, 5)
+          .forEach((date) => {
+            const dayInfo = dailyData[date];
+            const highTemp = Math.round(Math.max(...dayInfo.temps));
+            const lowTemp = Math.round(Math.min(...dayInfo.temps));
+            const representativeIcon =
+              dayInfo.icons[Math.floor(dayInfo.icons.length / 2)];
+            const dayOfWeek = new Date(date).toLocaleDateString("en-US", {
+              weekday: "short",
+            });
+
+            const dayElement = document.createElement("div");
+            dayElement.className = "forecast-day";
+            dayElement.innerHTML = `
+                        <h3>${dayOfWeek}</h3>
+                        <img src="https://openweathermap.org/img/wn/${representativeIcon}.png" alt="${dayInfo.descriptions[0]}">
+                        <div class="forecast-temp">
+                            <strong>${highTemp}°</strong> / ${lowTemp}°
+                        </div>
+                    `;
+            forecastContainer.appendChild(dayElement);
+          });
+      }
+
+      function displayAirQuality(data) {
+        const grid = document.getElementById("air-quality-grid");
+        grid.innerHTML = ""; // Clear loading message
+
+        const aqData = data.current;
+        const units = data.current_units;
+
+        const metrics = {
+          us_aqi: {
+            name: "US AQI",
+            value: aqData.us_aqi,
+            unit: "", // AQI is unitless
+            description:
+              "The US Air Quality Index is EPA's index for reporting air quality. A value from 0 to 50 is good, while a value over 300 is hazardous.",
+          },
+          pm10: {
+            name: "PM10",
+            value: aqData.pm10,
+            unit: units.pm10,
+            description:
+              "Particulate Matter smaller than 10 micrometers. These inhalable particles can irritate the eyes, nose, and throat.",
+          },
+          pm2_5: {
+            name: "PM2.5",
+            value: aqData.pm2_5,
+            unit: units.pm2_5,
+            description:
+              "Particulate Matter smaller than 2.5 micrometers. These fine particles can penetrate deep into the lungs and enter the bloodstream.",
+          },
+          nitrogen_dioxide: {
+            name: "Nitrogen Dioxide (NO₂)",
+            value: aqData.nitrogen_dioxide,
+            unit: units.nitrogen_dioxide,
+            description:
+              "A highly reactive gas primarily from emissions. It contributes to smog and acid rain and can cause respiratory problems.",
+          },
+          ozone: {
+            name: "Ozone (O₃)",
+            value: aqData.ozone,
+            unit: units.ozone,
+            description:
+              "A major component of smog. Ground-level ozone can cause breathing problems, trigger asthma, and reduce lung function.",
+          },
+          sulphur_dioxide: {
+            name: "Sulphur Dioxide (SO₂)",
+            value: aqData.sulphur_dioxide,
+            unit: units.sulphur_dioxide,
+            description:
+              "A toxic gas from burning fossil fuels. It can harm the respiratory system and make breathing difficult.",
+          },
+          carbon_monoxide: {
+            name: "Carbon Monoxide",
+            value: aqData.carbon_monoxide,
+            unit: units.carbon_monoxide,
+            description:
+              "A colorless, odorless gas from incomplete combustion. High levels can reduce oxygen in the bloodstream.",
+          },
+        };
+
+        for (const key in metrics) {
+          const metric = metrics[key];
+          if (metric.value === undefined || metric.value === null) continue; // Skip if metric is not available
+
+          const element = document.createElement("div");
+          element.className = "aq-metric";
+
+          const formattedValue =
+            key === "us_aqi" ? metric.value : metric.value.toFixed(2);
+
+          element.innerHTML = `
+                        <details>
+                            <summary>
+                                <span>${metric.name}</span>
+                                <span class="aq-metric-value">${formattedValue} ${metric.unit}</span>
+                            </summary>
+                            <p>${metric.description}</p>
+                        </details>
+                    `;
+          grid.appendChild(element);
+        }
+      }
+    </script>
+  </body>
+</html>

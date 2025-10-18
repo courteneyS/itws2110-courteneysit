@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  API_KEY = "";
+  API_KEY = "17634bcfe6a96e0b423e11420b772a55";
 
   navigator.geolocation.getCurrentPosition(
     function (position) {
