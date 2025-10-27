@@ -1,0 +1,71 @@
+[
+  {
+    "name": "Sushi Set",
+    "description": "A Japanese dish of prepared vinegared rice, usually with some sugar and salt, accompanying a variety of ingredients, such as seafood (often raw) and vegetables.",
+    "category": "Non-Vegetarian",
+    "cuisine": "Japanese",
+    "image": "sushi.jpeg",
+    "ingredients": [
+      "Rice",
+      "Rice Vinegar",
+      "Raw fish (e.g., tuna, salmon)",
+      "Nori (seaweed)",
+      "Vegetables (e.g., cucumber, avocado)",
+      "Soy sauce",
+      "Wasabi"
+    ],
+    "price": 20.0
+  },
+  {
+    "name": "Bimbimbap",
+    "description": "A Korean mixed rice dish topped with assorted vegetables, a fried egg, and gochujang sauce.",
+    "category": "Vegetarian",
+    "cuisine": "Korean",
+    "image": "bibimbap.jpg",
+    "ingredients": [
+      "Rice",
+      "Spinach",
+      "Carrots",
+      "Mushrooms",
+      "Zucchini",
+      "Bean sprouts",
+      "Fried egg",
+      "Gochujang (Korean chili paste)"
+    ],
+    "price": 14.0
+  },
+  {
+    "name": "Chicken Khao Soi",
+    "description": "A Northern Thai dish featuring egg noodles in a rich and creamy coconut curry broth, topped with crispy fried noodles and served with pickled mustard greens, shallots, and lime.",
+    "category": "Non-Vegetarian",
+    "cuisine": "Thai",
+    "image": "khao_soi.jpg",
+    "ingredients": [
+      "Egg noodles",
+      "Chicken",
+      "Coconut milk",
+      "Red curry paste",
+      "Pickled mustard greens",
+      "Shallots",
+      "Lime"
+    ],
+    "price": 14.0
+  },
+  {
+    "name": "Beef Pho",
+    "description": "A Vietnamese soup consisting of broth, rice noodles, herbs, and beef, served with fresh lime, and bean sprouts.",
+    "category": "Non-Vegetarian",
+    "cuisine": "Vietnamese",
+    "image": "pho.webp",
+    "ingredients": [
+      "Beef broth",
+      "Rice noodles",
+      "Thinly sliced beef",
+      "Cilantro",
+      "Basil",
+      "Bean sprouts",
+      "Lime wedges"
+    ],
+    "price": 12.0
+  }
+]

@@ -1,0 +1,1 @@
+I chose to use a vertical layout since most menus have this layout. I wanted the price and title for each item to stand out the most, which is why I bolded them. For the color scheme, I used neutral colors such as white and grey as I wanted the images of the food to stand out. I also added alt tags for my images for increased accessibility.
