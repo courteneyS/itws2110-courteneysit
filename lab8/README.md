@@ -1,0 +1,1 @@
+For Lab 8, we utilized our SQL and PHP skills learned in class by creating a database named websystems. Within this database we had mutiple tables, specifically courses, students, and grades. Since we have been using SQL and PHP for multiple labs as well as our final project I found this lab to be pretty straightforward and I was able to get the queries correct on the first try.

@@ -1,0 +1,61 @@
+===Database websyslab8
+
+== Table structure for table courses
+
+|------
+|Column|Type|Null|Default
+|------
+|//**crn**//|int(11)|No|
+|prefix|varchar(4)|No|
+|number|smallint(4)|No|
+|title|varchar(255)|No|
+|section|varchar(10)|Yes|NULL
+|year|year(4)|Yes|NULL
+== Dumping data for table courses
+
+|35797|PHYS|1100|Physics I|1|2025
+|37514|CSCI|1100|Introduction to Computer Science|2|2025
+|37730|MATH|2010|Multivar Calculus &amp; Matrix Algebra|1|2025
+|73048|ITWS|2110|Web Systems Development|1|2025
+== Table structure for table grades
+
+|------
+|Column|Type|Null|Default
+|------
+|//**id**//|int(11)|No|
+|crn|int(11)|No|
+|rin|int(11)|No|
+|grade|int(3)|No|
+== Dumping data for table grades
+
+|1|35797|662057096|85
+|2|35797|662057097|89
+|3|35797|662057098|79
+|4|37514|662057096|89
+|5|37514|662057099|94
+|6|37730|662057098|88
+|7|37730|662057099|82
+|8|73048|662057097|91
+|9|73048|662057098|92
+|10|73048|662057099|87
+== Table structure for table students
+
+|------
+|Column|Type|Null|Default
+|------
+|//**rin**//|int(9)|No|
+|rcsID|char(7)|No|
+|first_name|varchar(100)|No|
+|last_name|varchar(100)|No|
+|alias|varchar(100)|No|
+|phone|int(10)|Yes|NULL
+|street|varchar(255)|Yes|NULL
+|city|varchar(100)|Yes|NULL
+|state|char(2)|Yes|NULL
+|zip|char(10)|Yes|NULL
+== Dumping data for table students
+
+|662057096|siongd|Dana|Siong Sin|dana|1231231234|4 College Ave|Troy|NY|12180
+|662057097|spauln|Nicole|Spaulding|nicole|1231231233|3 College Ave|Troy|NY|12180
+|662057098|sitc|Courteney|Sit|courteney|1231231232|2 College Ave|Troy|NY|12180
+|662057099|wongp4|Priscilla|Wong|priscilla|1231231231|1 College Ave|Troy|NY|12180
